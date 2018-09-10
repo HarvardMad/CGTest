@@ -13,8 +13,8 @@ public class CapGeminiCart {
     Fruit_Enum appleCost = Fruit_Enum.APPLE;
     Fruit_Enum orangeCost = Fruit_Enum.ORANGE;
 
-    BigDecimal appleUnitCost = new BigDecimal(appleCost.getFruitPrice());
-    BigDecimal orangeUnitCost = new BigDecimal(orangeCost.getFruitPrice());
+    BigDecimal appleUnitCost = appleCost.getFruitPrice().setScale(2,BigDecimal.ROUND_CEILING);
+    BigDecimal orangeUnitCost = orangeCost.getFruitPrice().setScale(2,BigDecimal.ROUND_CEILING);
 
 
     private long totalAppleCount =0;
@@ -61,14 +61,14 @@ public class CapGeminiCart {
 
         applyAppleOffer();
 
-        return appleUnitCost.multiply(BigDecimal.valueOf(getTotalAppleCount()));
+        return appleUnitCost.multiply(BigDecimal.valueOf(getTotalAppleCount())).setScale(2,BigDecimal.ROUND_CEILING);
     }
 
     public BigDecimal getTotalCostOfOranges(){
 
         applyOrangeOffer();
 
-        return orangeUnitCost.multiply(BigDecimal.valueOf(getTotalOrangeCount()));
+        return orangeUnitCost.multiply(BigDecimal.valueOf(getTotalOrangeCount())).setScale(2,BigDecimal.ROUND_CEILING);
     }
 
     public void applyAppleOffer(){

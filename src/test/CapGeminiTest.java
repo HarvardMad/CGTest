@@ -1,14 +1,14 @@
 package test;
 
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import com.cg.shop.CapGeminiCart;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Created by LalinPethiyagoda on 10/09/2018.
@@ -25,7 +25,8 @@ public class CapGeminiTest {
         List<String> list = new ArrayList<String>(Arrays.asList(itemsList.split(",")));
         cart = new CapGeminiCart(list);
         BigDecimal total = cart.getCartTotal();
-        Assert.assertEquals(new BigDecimal("0.75"),total);
+        BigDecimal expected = new BigDecimal("0.85").setScale(2,BigDecimal.ROUND_CEILING);
+        Assert.assertEquals(expected,total.setScale(2,BigDecimal.ROUND_CEILING));
 
     }
 
@@ -35,8 +36,8 @@ public class CapGeminiTest {
         String itemsList = "apple,apple,orange";
         List<String> list = new ArrayList<String>(Arrays.asList(itemsList.split(",")));
         cart = new CapGeminiCart(list);
-        BigDecimal total = cart.getCartTotal();
-        Assert.assertEquals(new BigDecimal("0.75"),total);
+        BigDecimal total = cart.getCartTotal().setScale(2, RoundingMode.CEILING);
+        Assert.assertEquals(new BigDecimal("0.85").setScale(2,BigDecimal.ROUND_CEILING),total);
     }
 
     @Test
@@ -45,8 +46,8 @@ public class CapGeminiTest {
         String itemsList = "apple,apple,orange,orange,orange,orange";
         List<String> list = new ArrayList<String>(Arrays.asList(itemsList.split(",")));
         cart = new CapGeminiCart(list);
-        BigDecimal total = cart.getCartTotal();
-        Assert.assertEquals(new BigDecimal("1.75"),total);
+        float total = cart.getCartTotal().floatValue();
+        Assert.assertEquals(new BigDecimal("2.05").floatValue(),total,00.00);
     }
 
     @Test
@@ -55,8 +56,8 @@ public class CapGeminiTest {
         String itemsList = "apple,apple,apple,apple,apple,orange,orange,orange,orange";
         List<String> list = new ArrayList<String>(Arrays.asList(itemsList.split(",")));
         cart = new CapGeminiCart(list);
-        BigDecimal total = cart.getCartTotal();
-        Assert.assertEquals(new BigDecimal("2.25"),total);
+        BigDecimal total = cart.getCartTotal().setScale(2,BigDecimal.ROUND_CEILING);
+        Assert.assertEquals(new BigDecimal("2.55").setScale(2,BigDecimal.ROUND_CEILING),total);
     }
 
     @Test
@@ -65,8 +66,8 @@ public class CapGeminiTest {
         String itemsList = "";
         List<String> list = new ArrayList<String>(Arrays.asList(itemsList.split(",")));
         cart = new CapGeminiCart(list);
-        BigDecimal total = cart.getCartTotal();
-        Assert.assertEquals(new BigDecimal("0.00"),total);
+        BigDecimal total = cart.getCartTotal().setScale(2,BigDecimal.ROUND_CEILING);
+        Assert.assertEquals(new BigDecimal("0.00").setScale(2,BigDecimal.ROUND_CEILING),total);
     }
 
 
